@@ -87,7 +87,7 @@ previousButtonTag.addEventListener("click" , () => {
         return;
     }
     currentPlayingIndex -= 1;
-    const songIdToPlay = tracks[currentPlayingIndex].trackId;
+    const songIdToPlay = tracks[currentPlayingIndex].trackId; // DRY = Don't Repeat Yourself
     audioTag.src = songIdToPlay;
     audioTag.play();
     isPlaying = true;
