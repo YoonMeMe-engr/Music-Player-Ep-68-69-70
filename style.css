@@ -1,0 +1,51 @@
+body {
+    background-color: blue;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh; /* 100vh viewport-height ပေးလိုက်တာက Website ရဲ့ 100% ကို ယူလိုက်ပါလို့ပြောတာ 100vh မပေးဘဲ 100% ပေးလိုက်ရင် html body မှာကော 100% ပေးနေရမှာမလို့ပါ */
+    justify-content: center;
+}
+
+.playListContainer {
+    margin-bottom: 100px;
+}
+
+.trackItem {
+    color: #ffc107;
+    font-size: 20px;
+    border-bottom: 1px solid white;
+    padding: 10px 0px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.currentAndTotalTime {
+    color: white;
+}
+
+#progressBar {
+    width: 500px;
+    height: 5px;
+    background-color: peachpuff;
+}
+
+#currentProgress {
+    width: 0%;
+    height: 100%;
+    background-color: lightslategray;
+}
+
+.controls {
+    font-size: 30px;
+    color: #fff;
+    margin: 20px 40px;
+    cursor: pointer;
+}
+
+.pauseButton {
+    display: none;
+}
