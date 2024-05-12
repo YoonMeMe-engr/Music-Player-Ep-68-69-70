@@ -35,15 +35,21 @@ let duration = 0;
 let durationText = "00:00"; // current time မှာလဲ လှမ်းခေါ်ချင်လို့ Global Scope မှာ ကြေညာ
 audioTag.addEventListener("loadeddata" , () => {
     duration = Math.floor(audioTag.duration); // 147.92938 သီချင်းရဲ့ ကြာချိန်ထည့်ချင်လို့
-    durationText = createMinuteAndSecondText(duration);
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+
+    const minuteText = minutes < 10 ? "0" + minutes.toString() : minutes;
+    const secondText = seconds < 10 ? "0" + seconds.toString() : seconds;
+    //console.log(minuteText + ":" + secondText);
 });
 
 audioTag.addEventListener("timeupdate" , () => {
     const currentTime = Math.floor(audioTag.currentTime); //သီချင်းဖွင့်နေတဲ့ ကြာချိန်ထည့်ချင်လို့
-    const currentTimeText =  createMinuteAndSecondText(currentTime);
-    const currentTimeTextAndDurationText = currentTimeText + " / " + durationText;
-    currentAndTotalTimeTag.textContent = currentTimeTextAndDurationText;
-    updateCurrentPrgress(currentTime);
+     const minutes = Math.floor(currentTime / 60);
+    const seconds = currentTime % 60;
+
+    const minuteText = minutes < 10 ? "0" + minutes.toString() : minutes;
+    const secondText = seconds < 10 ? "0" + seconds.toString() : seconds;
 });
 
 const updateCurrentPrgress = (currentTime) => {
@@ -58,60 +64,4 @@ const createMinuteAndSecondText = (totalSecond) => {
     const minuteText = minutes < 10 ? "0" + minutes.toString() : minutes;
     const secondText = seconds < 10 ? "0" + seconds.toString() : seconds;
     return minuteText + ":" + secondText;
-};
-
-let currentPlayingIndex = 0;
-let isPlaying = false;
-playButtonTag.addEventListener("click" , () => {
-    const currentTime = Math.floor(audioTag.currentTime);
-    isPlaying = true;
-    if (currentTime === 0) {
-        const songIdToPlay = tracks[currentPlayingIndex].trackId;
-        audioTag.src = songIdToPlay;
-        audioTag.play();
-        updatePlayAndPauseButton();
-    } else {
-        audioTag.play();
-        updatePlayAndPauseButton();
-    }    
-});
-
-pauseButtonTag.addEventListener("click" , () => {
-    isPlaying = false;
-    audioTag.pause();
-    updatePlayAndPauseButton();
-});
-
-previousButtonTag.addEventListener("click" , () => {
-    if (currentPlayingIndex === 0) {
-        return;
-    }
-    currentPlayingIndex -= 1;
-    const songIdToPlay = tracks[currentPlayingIndex].trackId; // DRY = Don't Repeat Yourself
-    audioTag.src = songIdToPlay;
-    audioTag.play();
-    isPlaying = true;
-    updatePlayAndPauseButton();
-});
-
-nextButtonTag.addEventListener("click" , () => {
-    if (currentPlayingIndex === tracks.length - 1) {
-        return;
-    }
-    currentPlayingIndex += 1;
-    const songIdToPlay = tracks[currentPlayingIndex].trackId;
-    audioTag.src = songIdToPlay;
-    audioTag.play();
-    isPlaying = true;
-    updatePlayAndPauseButton();
-});
-
-const updatePlayAndPauseButton = () => {
-    if (isPlaying) {
-        playButtonTag.style.display = "none";
-        pauseButtonTag.style.display = "inline";
-    } else {
-        playButtonTag.style.display = "inline";
-        pauseButtonTag.style.display = "none";
-    }
 };
